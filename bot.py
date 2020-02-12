@@ -7,7 +7,6 @@ if __name__ == '__main__':
     print("autoswipe:")
     print("1 - Tinder")
     print("2 - Badoo")
-    print("3 - Tinder & Badoo")
 
     input = input()
     if input == '1':
