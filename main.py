@@ -3,10 +3,12 @@ from badooBot import *
 
 if __name__ == '__main__':
     print("Actions:")
-    print("_________________")
-    print("autoswipe:")
-    print("1 - Tinder")
-    print("2 - Badoo")
+    print("-----------------")
+    print("1: Tinder")
+    print("2: Badoo")
+    print("-----------------")
+    print("0: Exit")
+    print("-----------------")
 
     input = input()
     if input == '1':
@@ -17,5 +19,7 @@ if __name__ == '__main__':
         bot = BadooBot()
         bot.login()
         bot.autoswipe()
+    elif input == '0':
+        sys.exit()
     else:
-        print("input not recognized")
+        print("InputError: Input not recognized")
