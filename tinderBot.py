@@ -2,6 +2,8 @@ from selenium import webdriver
 from time import sleep
 from secrets import username, password
 
+import sys
+
 
 ### Webscraper User Actions ###
 # Click Login with facebook
@@ -65,7 +67,11 @@ class TinderBot():
                 try:
                     self.close_popup()
                 except Exception:
-                    self.close_match()
+                    try:
+                        self.close_match()
+                    except Exception:
+                        print("Something happened - You are probably out of likes for today.")
+                        sys.exit()
 
     ## functions for handling popups
     def close_popup(self):

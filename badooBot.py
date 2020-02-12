@@ -1,6 +1,7 @@
 from selenium import webdriver
 from time import sleep
 from secrets import username, password
+import sys
 
 
 
@@ -33,8 +34,8 @@ class BadooBot():
             login_btn.click()
             ## Now logged in, switch back to main window.
             self.driver.switch_to_window(base_window)
-            ## Handle location popups .. allow all'
-            sleep(5)
+            ## Wait for site load
+            sleep(4)
 
     def swipe_right(self):
         sleep(0.5)
@@ -55,7 +56,11 @@ class BadooBot():
                 try:
                     self.close_popup()
                 except Exception:
-                    self.close_match()
+                    try:
+                        self.close_match()
+                    except Exception:
+                        print("Something happened - You are probably out of likes for today.")
+                        sys.exit()
 
     ## functions for handling popups
     def close_popup(self):
