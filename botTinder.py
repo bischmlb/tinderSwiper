@@ -70,7 +70,7 @@ class TinderBot():
                     try:
                         self.close_match()
                     except Exception:
-                        print("Error: Something happened - You are probably out of likes for today.")
+                        print("\n" + "Error: Something happened - You are probably out of likes for today.")
                         sys.exit()
 
     ## functions for handling popups

@@ -1,5 +1,5 @@
-from tinderBot import *
-from badooBot import *
+from botBadoo import *
+from botTinder import *
 
 if __name__ == '__main__':
     print("Actions:")
