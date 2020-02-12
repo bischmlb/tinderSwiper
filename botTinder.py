@@ -3,7 +3,7 @@ from time import sleep
 from secrets import username, password
 
 import sys
-
+import random
 
 ### Webscraper User Actions ###
 # Click Login with facebook
@@ -49,13 +49,13 @@ class TinderBot():
             popup2.click()
 
     def swipe_right(self):
-        like_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/button[3]')
         sleep(0.5)
+        like_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/button[3]')
         like_btn.click()
 
     def swipe_left(self):
-        dislike_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/button[1]')
         sleep(0.5)
+        dislike_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/button[1]')
         dislike_btn.click()
 
     def autoswipe(self):
@@ -72,6 +72,26 @@ class TinderBot():
                     except Exception:
                         print("\n" + "Error: Something happened - You are probably out of likes for today.")
                         sys.exit()
+
+    def autoswipe_premium(self):
+        while True:
+            try:
+                value = int(round(random.random(),2)*100) # roll value
+                if value < 23:
+                    self.swipe_left()
+                else:
+                    self.swipe_right()
+            except Exception:
+                try:
+                    self.close_popup()
+                except Exception:
+                    try:
+                        self.close_match()
+                    except Exception:
+                        print("\n" + "Error: Something happened - You are probably out of likes for today.")
+                        sys.exit()
+
+
 
     ## functions for handling popups
     def close_popup(self):

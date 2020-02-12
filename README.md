@@ -12,5 +12,5 @@ Currently the ```chromedriver.exe``` is for Windows, but if you use other OS you
 You will also need ```selenium``` which can be installed with ```pip```  
 
 ##### todo:
-- *add ```randomness``` to which the bot should swipe right/left in future for premium users to make bot detection harder, but should not be needed for free versions*
 - *add UI (with tkinter?)*
+- *send default message to new matches*
