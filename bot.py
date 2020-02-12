@@ -3,12 +3,11 @@ from time import sleep
 from secrets import username, password
 
 
-### Webscraper User Actions ### *optional = Already logged into browser
+### Webscraper User Actions ###
 # Click Login with facebook
-# Fill out email (optional)
-# Fill out password (optional)
+# Fill out email
+# Fill out password
 # Click Log in
-### Bot actions
 
 class TinderBot():
     def __init__(self):
