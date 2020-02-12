@@ -6,4 +6,5 @@ Ex:
 ```py
 username = 'user123'
 password = 'pass123'
-```
+```  
+Currently the ```chromedriver.exe``` is for Windows, but if you use other OS you should make sure that chromedriver is reachable from the files. 
