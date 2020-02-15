@@ -14,6 +14,8 @@ import random
 class TinderBot():
     def __init__(self):
         self.driver = webdriver.Chrome()
+        self.like_count = 0
+        self.dislike_count = 0
 
     def login(self):
         url = self.driver.current_url
@@ -52,11 +54,15 @@ class TinderBot():
         sleep(0.5)
         like_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/button[3]')
         like_btn.click()
+        self.like_count += 1
+        if self.like_count % 5 == 0:
+            print("_Likes: " + str(self.like_count))
 
     def swipe_left(self):
         sleep(0.5)
         dislike_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/button[1]')
         dislike_btn.click()
+        self.dislike_count += 1
 
     def autoswipe(self):
         while True:
@@ -70,7 +76,8 @@ class TinderBot():
                     try:
                         self.close_match()
                     except Exception:
-                        print("\n" + "Error: Something happened - You are probably out of likes for today.")
+                        print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
+                        print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
                         sys.exit()
 
     def autoswipe_premium(self):
@@ -88,15 +95,16 @@ class TinderBot():
                     try:
                         self.close_match()
                     except Exception:
-                        print("\n" + "Error: Something happened - You are probably out of likes for today.")
+                        print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
+                        print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
                         sys.exit()
 
 
 
     ## functions for handling popups
     def close_popup(self):
-        popup_3 = self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div[2]/button[2]')
-        popup_3.click()
+        popup = self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div[2]/button[2]')
+        popup.click()
 
     def close_match(self):
         popup_match = self.driver.find_element_by_xpath('//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/a')

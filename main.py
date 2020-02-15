@@ -2,7 +2,7 @@ from botBadoo import *
 from botTinder import *
 
 if __name__ == '__main__':
-    print("Actions:")
+    print("\n\nActions:")
     print("\"Premium\" options are more ban secure as they add a chance to also swipe left once in a while. \nThis will reduce the chance of getting your account marked as bot")
     print("-----------------")
     print("1: Tinder")
@@ -11,26 +11,34 @@ if __name__ == '__main__':
     print("4: Badoo - Premium")
     print("-----------------")
     print("0: Exit")
-    print("-----------------")
+    print("-----------------\n\n")
 
-    input = input()
+    input = input("Choice: ")
     if input == '1':
-        print("Tinder ..\n")
+        print("-----------------")
+        print("Tinder..")
+        print("-----------------")
         bot = TinderBot()
         bot.login()
         bot.autoswipe()
     elif input == '2':
-        print("Tinder - Premium ..\n")
+        print("-----------------")
+        print("Tinder - Premium..")
+        print("-----------------")
         bot = TinderBot()
         bot.login()
         bot.autoswipe_premium()
     elif input == '3':
-        print("Badoo ..\n")
+        print("-----------------")
+        print("Badoo..")
+        print("-----------------")
         bot = BadooBot()
         bot.login()
         bot.autoswipe()
     elif input == '4':
-        print("Badoo - Premium ..\n")
+        print("-----------------")
+        print("Badoo - Premium..")
+        print("-----------------")
         bot = BadooBot()
         bot.login()
         bot.autoswipe_premium()

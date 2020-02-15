@@ -6,8 +6,11 @@ import sys
 
 
 class BadooBot():
+
     def __init__(self):
         self.driver = webdriver.Chrome()
+        self.like_count = 0
+        self.dislike_count = 0
 
     def login(self):
         url = self.driver.current_url
@@ -35,17 +38,21 @@ class BadooBot():
             ## Now logged in, switch back to main window.
             self.driver.switch_to_window(base_window)
             ## Wait for site load
-            sleep(4)
+            sleep(5)
 
     def swipe_right(self):
         sleep(0.5)
         like_btn = self.driver.find_element_by_xpath('//*[@id="mm_cc"]/div[1]/section/div/div[2]/div/div[2]/div[1]/div[1]')
         like_btn.click()
+        self.like_count += 1
+        if self.like_count % 5 == 0:
+            print("_Likes: " + str(self.like_count))
 
     def swipe_left(self):
         sleep(0.5)
         dislike_btn = self.driver.find_element_by_xpath('//*[@id="mm_cc"]/div[1]/section/div/div[2]/div/div[2]/div[2]/div[1]')
         dislike_btn.click()
+        self.dislike_count += 1
 
     def autoswipe(self):
         while True:
@@ -59,8 +66,12 @@ class BadooBot():
                     try:
                         self.close_match()
                     except Exception:
-                        print("\n" + "Error: Something happened - You are probably out of likes for today.")
-                        sys.exit()
+                        try:
+                            close_popup2()
+                        except:
+                            print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
+                            print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
+                            sys.exit()
 
     def autoswipe_premium(self):
         while True:
@@ -77,15 +88,25 @@ class BadooBot():
                     try:
                         self.close_match()
                     except Exception:
-                        print("\n" + "Error: Something happened - You are probably out of likes for today.")
-                        sys.exit()
+                        try:
+                            close_popup2()
+                        except:
+                            print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
+                            print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
+                            sys.exit()
 
     ## functions for handling popups
     def close_popup(self):
-        popup_3 = self.driver.find_element_by_xpath('/html/body/aside/section/div[1]/div/div[2]/div/div[1]')
-        popup_3.click()
+        popup = self.driver.find_element_by_xpath('/html/body/aside/section/div[1]/div/div[2]/div/div[1]')
+        popup.click()
+        sleep(1)
+
+    def close_popup2(self):
+        popup = self.driver.find_element_by_xpath('/html/body/aside/section/div[1]/div/div[3]/div[2]/span')
+        popup.click()
         sleep(1)
 
     def close_match(self):
         popup_match = self.driver.find_element_by_xpath('/html/body/aside/section/div[1]/div/div[1]/div[4]')
         popup_match.click()
+        sleep(1)
