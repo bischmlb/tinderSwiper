@@ -16,15 +16,16 @@ class TinderBot():
         self.driver = webdriver.Chrome()
         self.like_count = 0
         self.dislike_count = 0
+        self.match_count = 0
 
     def login(self):
         url = self.driver.current_url
         if url != 'https://tinder.com':
             self.driver.get('https://tinder.com')
             ## Give browser time to navigate and give login popup
-            sleep(3)
+            sleep(5)
             ## Login
-            login_facebook = self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/div[2]/button')
+            login_facebook = self.driver.find_element_by_xpath('/html/body/div[2]/div/div/div/div/div[3]/span/div[2]/button')
             login_facebook.click()
             ## We will be prompted to enter login-information in new window, so we need to switch from base window to popup-window.
             ## Initialize base window
@@ -44,15 +45,23 @@ class TinderBot():
             ## Now logged in, switch back to main window.
             self.driver.switch_to_window(base_window)
             ## Handle location popups .. allow all'
-            sleep(2) # Wait for browser ..
+            sleep(8) # Wait for browser ..
             popup1 = self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/button[1]')
             popup1.click()
             popup2 = self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/button[1]')
             popup2.click()
+            sleep(8)
+
+    def more_options_exist(self):
+        try:
+            self.driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div/div/main/div/div[2]/div[2]/div/div/span/button')
+        except Exception:
+            return False
+        return True
 
     def swipe_right(self):
         sleep(0.5)
-        like_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/button[3]')
+        like_btn = self.driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[4]/button')
         like_btn.click()
         self.like_count += 1
         if self.like_count % 5 == 0:
@@ -60,7 +69,8 @@ class TinderBot():
 
     def swipe_left(self):
         sleep(0.5)
-        dislike_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/button[1]')
+        ### Probably wrong xpath
+        dislike_btn = self.driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div/div/main/div/div[1]/div/div[2]/div[2]/button')
         dislike_btn.click()
         self.dislike_count += 1
 
@@ -78,8 +88,10 @@ class TinderBot():
                     except Exception:
                         print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
                         print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
+                        print("_Total matches: " + str(self.match_count) + "\n")
                         sys.exit()
 
+## Premium probably not working because wrong xpath for swipe_left
     def autoswipe_premium(self):
         while True:
             try:
@@ -97,6 +109,7 @@ class TinderBot():
                     except Exception:
                         print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
                         print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
+                        print("_Total matches: " + str(self.match_count) + "\n")
                         sys.exit()
 
 
@@ -109,3 +122,4 @@ class TinderBot():
     def close_match(self):
         popup_match = self.driver.find_element_by_xpath('//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/a')
         popup_match.click()
+        self.match_count += 1

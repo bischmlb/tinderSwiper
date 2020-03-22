@@ -11,6 +11,7 @@ class BadooBot():
         self.driver = webdriver.Chrome()
         self.like_count = 0
         self.dislike_count = 0
+        self.match_count = 0
 
     def login(self):
         url = self.driver.current_url
@@ -38,7 +39,7 @@ class BadooBot():
             ## Now logged in, switch back to main window.
             self.driver.switch_to_window(base_window)
             ## Wait for site load
-            sleep(5)
+            sleep(8)
 
     def swipe_right(self):
         sleep(0.5)
@@ -71,6 +72,7 @@ class BadooBot():
                         except:
                             print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
                             print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
+                            print("_Total matches: " + str(self.match_count) + "\n")
                             sys.exit()
 
     def autoswipe_premium(self):
@@ -93,6 +95,7 @@ class BadooBot():
                         except:
                             print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
                             print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
+                            print("_Total matches: " + str(self.match_count) + "\n")
                             sys.exit()
 
     ## functions for handling popups
@@ -109,4 +112,5 @@ class BadooBot():
     def close_match(self):
         popup_match = self.driver.find_element_by_xpath('/html/body/aside/section/div[1]/div/div[1]/div[4]')
         popup_match.click()
+        self.match_count += 1
         sleep(1)
