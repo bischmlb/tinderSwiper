@@ -7,7 +7,11 @@ def setUser():
     print("Source code can be found at the github repository: \n > https://github.com/bischmlb/tinderSwiper.git ")
     print("\n-----------------")
     username = input("Username(Facebook email): ")
-    return username
+    if ("@" in username):
+        return username
+    else:
+        print("> ERROR: The given username is not an email address. Please try again. \n")
+        sys.exit()
 
 def setPass():
     password = input("Password(Facebook password): ")
@@ -16,10 +20,13 @@ def setPass():
 
 
 if __name__ == '__main__':
+    ## User credentials to be used
     username = setUser()
     password = setPass()
+
+    ## Actions
     print("\n\nActions:")
-    print("\"Premium\" options are more ban secure as they add a chance to also swipe left once in a while. \nThis will reduce the chance of getting your account flagged as bot \nUse at OWN risk! :)")
+    print("\"Premium\" options are more ban secure as they add a chance to also swipe left once in a while. \nThis will reduce the chance of getting your account flagged as bot \nUse at OWN risk! :) \nProcess can be interrupted anytime with 'CTRL + C'")
     print("-----------------")
     print("1: Tinder")
     print("2: Tinder - Premium")
@@ -37,8 +44,13 @@ if __name__ == '__main__':
         bot = TinderBot()
         bot.user = username
         bot.passw = password
-        bot.login()
+        try:
+            bot.login()
+        except Exception:
+            print(" > ERROR: Login unsuccessful. Please try again.\n")
+            sys.exit()
         bot.autoswipe()
+
     elif input == '2':
         print("-----------------")
         print("(2) Tinder - Premium..")
@@ -46,8 +58,13 @@ if __name__ == '__main__':
         bot = TinderBot()
         bot.user = username
         bot.passw = password
-        bot.login()
+        try:
+            bot.login()
+        except Exception:
+            print(" > ERROR: Login unsuccessful. Please try again.\n")
+            sys.exit()
         bot.autoswipe_premium()
+
     elif input == '3':
         print("-----------------")
         print("(3) Badoo..")
@@ -55,8 +72,13 @@ if __name__ == '__main__':
         bot = BadooBot()
         bot.user = username
         bot.passw = password
-        bot.login()
+        try:
+            bot.login()
+        except Exception:
+            print(" > ERROR: Login unsuccessful. Please try again.\n")
+            sys.exit()
         bot.autoswipe()
+
     elif input == '4':
         print("-----------------")
         print("(4) Badoo - Premium..")
@@ -64,8 +86,13 @@ if __name__ == '__main__':
         bot = BadooBot()
         bot.user = username
         bot.passw = password
-        bot.login()
+        try:
+            bot.login()
+        except Exception:
+            print(" > ERROR: Login unsuccessful. Please try again.\n")
+            sys.exit()
         bot.autoswipe_premium()
+
     elif input == '0':
         sys.exit()
     else:
