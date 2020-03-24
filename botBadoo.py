@@ -5,7 +5,6 @@ import sys
 
 
 class BadooBot():
-
     def __init__(self):
         self.driver = webdriver.Chrome('chromedriver')
         self.like_count = 0
@@ -40,7 +39,7 @@ class BadooBot():
             ## Now logged in, switch back to main window.
             self.driver.switch_to_window(base_window)
             ## Wait for site load
-            sleep(8)
+            sleep(7)
 
     def swipe_right(self):
         sleep(0.5)
@@ -48,7 +47,7 @@ class BadooBot():
         like_btn.click()
         self.like_count += 1
         if self.like_count % 5 == 0:
-            print("_Likes: " + str(self.like_count))
+            print("> Likes: " + str(self.like_count))
 
     def swipe_left(self):
         sleep(0.5)
@@ -71,9 +70,9 @@ class BadooBot():
                         try:
                             close_popup2()
                         except:
-                            print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
-                            print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
-                            print("_Total matches: " + str(self.match_count) + "\n")
+                            print("\n" + "INFO: Something happened - You are probably out of likes for today.\n")
+                            print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
+                            print("> Total matches: " + str(self.match_count) + "\n")
                             sys.exit()
 
     def autoswipe_premium(self):
@@ -94,9 +93,9 @@ class BadooBot():
                         try:
                             close_popup2()
                         except:
-                            print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
-                            print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
-                            print("_Total matches: " + str(self.match_count) + "\n")
+                            print("\n" + "> INFO: Something happened - You are probably out of likes for today.\n")
+                            print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
+                            print("> Total matches: " + str(self.match_count) + "\n")
                             sys.exit()
 
     ## functions for handling popups

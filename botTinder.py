@@ -50,7 +50,7 @@ class TinderBot():
             popup1.click()
             popup2 = self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/button[1]')
             popup2.click()
-            sleep(8)
+            sleep(7)
 
     def more_options_exist(self):
         try:
@@ -65,7 +65,7 @@ class TinderBot():
         like_btn.click()
         self.like_count += 1
         if self.like_count % 5 == 0:
-            print("_Likes: " + str(self.like_count))
+            print("> Likes: " + str(self.like_count))
 
     def swipe_left(self):
         sleep(0.5)
@@ -85,9 +85,9 @@ class TinderBot():
                     try:
                         self.close_match()
                     except Exception:
-                        print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
-                        print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
-                        print("_Total matches: " + str(self.match_count) + "\n")
+                        print("\n" + "> INFO: Something happened - You are probably out of likes for today.\n")
+                        print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
+                        print("> Total matches: " + str(self.match_count) + "\n")
                         sys.exit()
 
     def autoswipe_premium(self):
@@ -105,9 +105,9 @@ class TinderBot():
                     try:
                         self.close_match()
                     except Exception:
-                        print("\n" + "Error: Something happened - You are probably out of likes for today.\n")
-                        print("_Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count) + "\n")
-                        print("_Total matches: " + str(self.match_count) + "\n")
+                        print("\n" + "> INFO: Something happened - You are probably out of likes for today.\n")
+                        print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
+                        print("> Total matches: " + str(self.match_count) + "\n")
                         sys.exit()
 
 
