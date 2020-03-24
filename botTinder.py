@@ -1,7 +1,5 @@
 from selenium import webdriver
 from time import sleep
-from secrets import username, password
-
 import sys
 import random
 
@@ -14,6 +12,8 @@ import random
 class TinderBot():
     def __init__(self):
         self.driver = webdriver.Chrome()
+        self.user = ""
+        self.passw = ""
         self.like_count = 0
         self.dislike_count = 0
         self.match_count = 0
@@ -35,10 +35,10 @@ class TinderBot():
             ## Selecting email, password, and logging in
             ## Handle email
             email_input = self.driver.find_element_by_xpath('//*[@id="email"]')
-            email_input.send_keys(username)
+            email_input.send_keys(self.user)
             ## Handle password
             pass_input = self.driver.find_element_by_xpath('//*[@id="pass"]')
-            pass_input.send_keys(password)
+            pass_input.send_keys(self.passw)
             ## Click login
             login_btn = self.driver.find_element_by_xpath('//*[@id="u_0_0"]')
             login_btn.click()
@@ -69,7 +69,6 @@ class TinderBot():
 
     def swipe_left(self):
         sleep(0.5)
-        ### Probably wrong xpath
         dislike_btn = self.driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div/div/main/div/div[1]/div/div[2]/div[2]/button')
         dislike_btn.click()
         self.dislike_count += 1
@@ -91,7 +90,6 @@ class TinderBot():
                         print("_Total matches: " + str(self.match_count) + "\n")
                         sys.exit()
 
-## Premium probably not working because wrong xpath for swipe_left
     def autoswipe_premium(self):
         while True:
             try:
