@@ -17,9 +17,10 @@ class BadooBot():
         url = self.driver.current_url
         if url != 'https://badoo.com':
             self.driver.get('https://badoo.com')
+            self.driver.maximize_window()
             ## Give browser time to navigate and give login popup
             ## Login
-            login_facebook = self.driver.find_element_by_xpath('//*[@id="page"]/div[2]/div[3]/div/div[3]/div/div[1]/div[2]/div/div/a')
+            login_facebook = self.driver.find_element_by_xpath('//*[@id="page"]/div[1]/div[3]/div/div[3]/div/div[1]/div[2]/div/div/a')
             login_facebook.click()
             ## We will be prompted to enter login-information in new window, so we need to switch from base window to popup-window.
             ## Initialize base window
@@ -69,12 +70,17 @@ class BadooBot():
                     except Exception:
                         try:
                             close_popup2()
-                        except:
-                            print("\n" + "INFO: Something happened - You are probably out of likes for today.\n")
-                            print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
-                            print("> Total matches: " + str(self.match_count) + "\n")
-                            sys.exit()
-
+                        except Exception:
+                            try:
+                                self.driver.find_element_by_xpath('/html/body/aside/section/div[1]/div/div/section/div/div/div/div[2]/div').click() # springer over
+                            except Exception:
+                                try:
+                                    self.driver.find_element_by_xpath('/html/body/aside/section/div[1]/div/div[2]/i').click()
+                                except Exception:
+                                    print("\n" + "INFO: Something happened - You are probably out of likes for today.\n")
+                                    print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
+                                    print("> Total matches: " + str(self.match_count) + "\n")
+                                    sys.exit()
     def autoswipe_premium(self):
         while True:
             try:
@@ -92,11 +98,17 @@ class BadooBot():
                     except Exception:
                         try:
                             close_popup2()
-                        except:
-                            print("\n" + "> INFO: Something happened - You are probably out of likes for today.\n")
-                            print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
-                            print("> Total matches: " + str(self.match_count) + "\n")
-                            sys.exit()
+                        except Exception:
+                            try:
+                                self.driver.find_element_by_xpath('/html/body/aside/section/div[1]/div/div/section/div/div/div/div[2]/div').click() # springer over
+                            except Exception:
+                                try:
+                                    self.driver.find_element_by_xpath('/html/body/aside/section/div[1]/div/div[2]/i').click()
+                                except Exception:
+                                    print("\n" + "INFO: Something happened - You are probably out of likes for today.\n")
+                                    print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
+                                    print("> Total matches: " + str(self.match_count) + "\n")
+                                    sys.exit()
 
     ## functions for handling popups
     def close_popup(self):

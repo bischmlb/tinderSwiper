@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from time import sleep
 import sys
 import random
@@ -11,7 +12,9 @@ import random
 
 class TinderBot():
     def __init__(self):
-        self.driver = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.add_argument("--window-size=1920,1080")
+        self.driver = webdriver.Chrome(options=chrome_options)
         self.user = ""
         self.passw = ""
         self.like_count = 0
@@ -22,10 +25,14 @@ class TinderBot():
         url = self.driver.current_url
         if url != 'https://tinder.com':
             self.driver.get('https://tinder.com')
+            self.driver.maximize_window()
             ## Give browser time to navigate and give login popup
-            sleep(5)
+            sleep(3)
             ## Login
-            login_facebook = self.driver.find_element_by_xpath('/html/body/div[2]/div/div/div/div/div[3]/span/div[2]/button')
+            loginBtn = self.driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/header/div[1]/div[2]/div/button')
+            loginBtn.click()
+            sleep(3)
+            login_facebook = self.driver.find_element_by_xpath('/html/body/div[2]/div/div/div[1]/div/div[3]/span/div[2]/button')
             login_facebook.click()
             ## We will be prompted to enter login-information in new window, so we need to switch from base window to popup-window.
             ## Initialize base window
@@ -80,15 +87,21 @@ class TinderBot():
                 self.swipe_right()
             except Exception:
                 try:
-                    self.close_popup()
+                    self.close_match()
                 except Exception:
                     try:
-                        self.close_match()
+                        self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div[3]/button[2]').click() #antal nye likes
                     except Exception:
-                        print("\n" + "> INFO: Something happened - You are probably out of likes for today.\n")
-                        print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
-                        print("> Total matches: " + str(self.match_count) + "\n")
-                        sys.exit()
+                            try:
+                                self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div[2]/button[2]').click() #føj tinder til startskærm
+                            except Exception:
+                                try:
+                                    self.driver.find_element_by_xpath('//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/button')
+                                except Exception:
+                                    print("\n" + "> INFO: Something happened - You are probably out of likes for today.\n")
+                                    print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
+                                    print("> Total matches: " + str(self.match_count) + "\n")
+                                    sys.exit()
 
     def autoswipe_premium(self):
         while True:
@@ -105,11 +118,16 @@ class TinderBot():
                     try:
                         self.close_match()
                     except Exception:
-                        print("\n" + "> INFO: Something happened - You are probably out of likes for today.\n")
-                        print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
-                        print("> Total matches: " + str(self.match_count) + "\n")
-                        sys.exit()
-
+                        try:
+                            self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div[3]/button[2]').click()
+                        except Exception:
+                            try:
+                                self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div[2]/button[2]').click()
+                            except Exception:
+                                print("\n" + "> INFO: Something happened - You are probably out of likes for today.\n")
+                                print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
+                                print("> Total matches: " + str(self.match_count) + "\n")
+                                sys.exit()
 
 
     ## functions for handling popups
