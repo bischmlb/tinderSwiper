@@ -1,6 +1,7 @@
 from selenium import webdriver
 from time import sleep
 import sys
+import random
 
 
 
@@ -12,6 +13,7 @@ class BadooBot():
         self.passw = ""
         self.dislike_count = 0
         self.match_count = 0
+        self.speed = 0.5
 
     def login(self):
         url = self.driver.current_url
@@ -41,9 +43,10 @@ class BadooBot():
             self.driver.switch_to_window(base_window)
             ## Wait for site load
             sleep(7)
+            print("> Swiping ..")
 
     def swipe_right(self):
-        sleep(0.5)
+        sleep(self.speed)
         like_btn = self.driver.find_element_by_xpath('//*[@id="mm_cc"]/div[1]/section/div/div[2]/div/div[2]/div[1]/div[1]')
         like_btn.click()
         self.like_count += 1
@@ -51,7 +54,7 @@ class BadooBot():
             print("> Likes: " + str(self.like_count))
 
     def swipe_left(self):
-        sleep(0.5)
+        sleep(self.speed)
         dislike_btn = self.driver.find_element_by_xpath('//*[@id="mm_cc"]/div[1]/section/div/div[2]/div/div[2]/div[2]/div[1]')
         dislike_btn.click()
         self.dislike_count += 1
@@ -80,6 +83,11 @@ class BadooBot():
                                     print("\n" + "INFO: Something happened - You are probably out of likes for today.\n")
                                     print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
                                     print("> Total matches: " + str(self.match_count) + "\n")
+                                    if self.match_count == 0:
+                                        print("> Match/Like ratio: " + str(0) + "%\n")
+                                    else:
+                                        print("> Match/Like ratio: " + str(self.like_count/self.match_count) + "%\n")
+
                                     sys.exit()
     def autoswipe_premium(self):
         while True:
@@ -108,6 +116,11 @@ class BadooBot():
                                     print("\n" + "INFO: Something happened - You are probably out of likes for today.\n")
                                     print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
                                     print("> Total matches: " + str(self.match_count) + "\n")
+                                    if self.match_count == 0:
+                                        print("> Match/Like ratio: " + str(0) + "%\n")
+                                    else:
+                                        print("> Match/Like ratio: " + str(self.like_count/self.match_count) + "%\n")
+
                                     sys.exit()
 
     ## functions for handling popups

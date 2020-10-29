@@ -1,5 +1,6 @@
 from botBadoo import *
 from botTinder import *
+from getpass import getpass
 
 def setUser():
     print("\n\nIn order to log into your account, the program will need your login credentials.")
@@ -14,7 +15,11 @@ def setUser():
         sys.exit()
 
 def setPass():
-    password = input("Password(Facebook password): ")
+    password = getpass("Password(Facebook password): ")
+    replacementPass = ''
+    for i in password:
+        replacementPass = '*' + replacementPass
+    print(replacementPass)
     print("-----------------")
     return password
 
@@ -25,7 +30,7 @@ if __name__ == '__main__':
     password = setPass()
 
     ## Actions
-    print("\n\nActions:")
+    print("\nActions:")
     print("\"Premium\" options are more ban secure as they add a chance to also swipe left once in a while. \nThis will reduce the chance of getting your account flagged as bot \nUse at OWN risk! :) \nProcess can be interrupted anytime with 'CTRL + C'")
     print("-----------------")
     print("1: Tinder")
@@ -36,14 +41,28 @@ if __name__ == '__main__':
     print("0: Exit")
     print("-----------------\n\n")
 
-    input = input("Choice: ")
-    if input == '1':
+    inputChoice = input("Choice: ")
+    swipeSpeed = input("Set swipe speed 1-9(default=5, higher=faster): ")
+    swipeSD = (10-int(swipeSpeed))/10
+    sendMsg = input("(**NOT YET IMPLEMENTED**)Do you want to send msg to new match in case of match? Y/N or y/n: ")
+    if sendMsg == 'Y' or sendMsg == 'y':
+        matchMsg = input("Set standard MATCH_message: ")
+
+    if inputChoice == '1':
         print("-----------------")
         print("(1) Tinder..")
         print("-----------------")
         bot = TinderBot()
+
+        if sendMsg == 'Y' or sendMsg == 'y':
+            bot.sendMatchMsg = True
+            bot.matchBesked = matchMsg
+            print("Setting MATCH initial message to: \"" + bot.matchBesked + "\"")
+        else:
+            bot.sendMatchMsg = False
         bot.user = username
         bot.passw = password
+        bot.speed = swipeSD
         try:
             bot.login()
         except Exception:
@@ -51,13 +70,20 @@ if __name__ == '__main__':
             sys.exit()
         bot.autoswipe()
 
-    elif input == '2':
+    elif inputChoice == '2':
         print("-----------------")
         print("(2) Tinder - Premium..")
         print("-----------------")
         bot = TinderBot()
+        if sendMsg == 'Y' or sendMsg == 'y':
+            bot.sendMatchMsg = True
+            bot.matchBesked = matchMsg
+            print("Setting MATCH initial message to: \"" + bot.matchBesked + "\"")
+        else:
+            bot.sendMatchMsg = False
         bot.user = username
         bot.passw = password
+        bot.speed = swipeSD
         try:
             bot.login()
         except Exception:
@@ -65,13 +91,20 @@ if __name__ == '__main__':
             sys.exit()
         bot.autoswipe_premium()
 
-    elif input == '3':
+    elif inputChoice == '3':
         print("-----------------")
         print("(3) Badoo..")
         print("-----------------")
         bot = BadooBot()
+        if sendMsg == 'Y' or sendMsg == 'y':
+            bot.sendMatchMsg = True
+            bot.matchBesked = matchMsg
+            print("Setting MATCH initial message to: \"" + bot.matchBesked + "\"")
+        else:
+            bot.sendMatchMsg = False
         bot.user = username
         bot.passw = password
+        bot.speed = swipeSD
         try:
             bot.login()
         except Exception:
@@ -79,13 +112,20 @@ if __name__ == '__main__':
             sys.exit()
         bot.autoswipe()
 
-    elif input == '4':
+    elif inputChoice == '4':
         print("-----------------")
         print("(4) Badoo - Premium..")
         print("-----------------")
         bot = BadooBot()
+        if sendMsg == 'Y' or sendMsg == 'y':
+            bot.sendMatchMsg = True
+            bot.matchBesked = matchMsg
+            print("Setting MATCH initial message to: \"" + bot.matchBesked + "\"")
+        else:
+            bot.sendMatchMsg = False
         bot.user = username
         bot.passw = password
+        bot.speed = swipeSD
         try:
             bot.login()
         except Exception:
@@ -93,7 +133,7 @@ if __name__ == '__main__':
             sys.exit()
         bot.autoswipe_premium()
 
-    elif input == '0':
+    elif inputChoice == '0':
         sys.exit()
     else:
         print("InputError: Input not recognized")

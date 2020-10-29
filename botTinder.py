@@ -17,9 +17,12 @@ class TinderBot():
         self.driver = webdriver.Chrome(options=chrome_options)
         self.user = ""
         self.passw = ""
+        self.sendMatchMsg = False
+        self.matchBesked = ""
         self.like_count = 0
         self.dislike_count = 0
         self.match_count = 0
+        self.speed = 0.5
 
     def login(self):
         url = self.driver.current_url
@@ -67,7 +70,7 @@ class TinderBot():
         return True
 
     def swipe_right(self):
-        sleep(0.5)
+        sleep(self.speed)
         like_btn = self.driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[4]/button')
         like_btn.click()
         self.like_count += 1
@@ -75,7 +78,7 @@ class TinderBot():
             print("> Likes: " + str(self.like_count))
 
     def swipe_left(self):
-        sleep(0.5)
+        sleep(self.speed)
         dislike_btn = self.driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div/div/main/div/div[1]/div/div[2]/div[2]/button')
         dislike_btn.click()
         self.dislike_count += 1
@@ -101,6 +104,11 @@ class TinderBot():
                                     print("\n" + "> INFO: Something happened - You are probably out of likes for today.\n")
                                     print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
                                     print("> Total matches: " + str(self.match_count) + "\n")
+                                    if self.match_count == 0:
+                                        print("> Match/Like ratio: " + str(0) + "%\n")
+                                    else:
+                                        print("> Match/Like ratio: " + str(self.like_count/self.match_count) + "%\n")
+
                                     sys.exit()
 
     def autoswipe_premium(self):
@@ -127,6 +135,10 @@ class TinderBot():
                                 print("\n" + "> INFO: Something happened - You are probably out of likes for today.\n")
                                 print("> Total likes/dislikes: " + str(self.like_count) + "/" + str(self.dislike_count))
                                 print("> Total matches: " + str(self.match_count) + "\n")
+                                if self.match_count == 0:
+                                    print("> Match/Like ratio: " + str(0) + "%\n")
+                                else:
+                                    print("> Match/Like ratio: " + str(self.like_count/self.match_count) + "%\n")
                                 sys.exit()
 
 
