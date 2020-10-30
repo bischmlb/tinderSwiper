@@ -44,9 +44,13 @@ if __name__ == '__main__':
     inputChoice = input("Choice: ")
     swipeSpeed = input("Set swipe speed 1-9(default=5, higher=faster): ")
     swipeSD = (10-int(swipeSpeed))/10
-    sendMsg = input("(**NOT YET IMPLEMENTED**)Do you want to send msg to new match in case of match? Y/N or y/n: ")
+    sendMsg = input("**Tinder only** Do you want to send a default message to new matches? Y/N or y/n: ")
     if sendMsg == 'Y' or sendMsg == 'y':
-        matchMsg = input("Set standard MATCH_message: ")
+        defaultMsg = input("The default message is \"Hej <name> =) Du ser sød ud!\" - Do you wish to change this and write your own message? Y/N or y/n")
+        if defaultMsg == 'Y' or defaultMsg == 'y':
+            matchMsg = input("Set standard MATCH_message: ")
+        else:
+            print("Standard MATCH_mesage will be set to: \"Hej <name> =) Du ser sød ud!\" ")
 
     if inputChoice == '1':
         print("-----------------")
@@ -56,8 +60,8 @@ if __name__ == '__main__':
 
         if sendMsg == 'Y' or sendMsg == 'y':
             bot.sendMatchMsg = True
-            bot.matchBesked = matchMsg
-            print("Setting MATCH initial message to: \"" + bot.matchBesked + "\"")
+            if defaultMsg == 'Y' or defaultMsg == 'y':
+                bot.matchBesked = matchMsg
         else:
             bot.sendMatchMsg = False
         bot.user = username
@@ -77,8 +81,8 @@ if __name__ == '__main__':
         bot = TinderBot()
         if sendMsg == 'Y' or sendMsg == 'y':
             bot.sendMatchMsg = True
-            bot.matchBesked = matchMsg
-            print("Setting MATCH initial message to: \"" + bot.matchBesked + "\"")
+            if defaultMsg == 'Y' or defaultMsg == 'y':
+                bot.matchBesked = matchMsg
         else:
             bot.sendMatchMsg = False
         bot.user = username

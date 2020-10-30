@@ -18,7 +18,8 @@ class TinderBot():
         self.user = ""
         self.passw = ""
         self.sendMatchMsg = False
-        self.matchBesked = ""
+        self.matchName = ""
+        self.matchBesked = "Hej " + self.matchName + " =) " + "Du ser sød ud!"
         self.like_count = 0
         self.dislike_count = 0
         self.match_count = 0
@@ -148,6 +149,15 @@ class TinderBot():
         popup.click()
 
     def close_match(self):
+        nameString = self.driver.find_element_by_xpath('//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/div[2]').getText()
+        self.matchName = nameString.split()[0]
+        if self.sendMatchMsg == True:
+            ## Hvis der er sat en matchMsg sender vi beskeden ved tilfælde af match;
+            stringBox = self.driver.find_element_by_xpath('//*[@id="chat-text-area"]')
+            stringBox.send_keys(self.matchBesked)
+            submitMsg = self.driver.find_element_by_xpath('//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/div[3]/form/button')
+            submitMsg.click()
+
         popup_match = self.driver.find_element_by_xpath('//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/a')
         popup_match.click()
         self.match_count += 1
